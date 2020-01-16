@@ -1,7 +1,7 @@
 import React from "react";
 import nullImg from "../img/null.png";
 
-class FetchAlone extends React.PureComponent {
+class FetchMovie extends React.PureComponent {
   state = {
     moviePoster: null,
     movieTitle: null,
@@ -17,6 +17,12 @@ class FetchAlone extends React.PureComponent {
     });
   };
 
+  outsideChange = change => {
+    this.setState({
+      busquedaPeli: change
+    });
+  };
+
   componentDidMount() {
     console.log("component did mount ( fetchAlone.js)");
 
@@ -26,7 +32,11 @@ class FetchAlone extends React.PureComponent {
         this.setState({
           moviePoster: resp.Poster,
           movieTitle: resp.Title,
-          movieYear: resp.Year
+          movieYear: resp.Year,
+          movieDirector: resp.Director,
+          movieRuntime: resp.Runtime,
+          movieActors: resp.Actors,
+          moviePlot: resp.Plot
         })
       );
   }
@@ -36,32 +46,39 @@ class FetchAlone extends React.PureComponent {
   }
 
   render() {
-    console.log(this.state.moviePoster);
-    let pelicula = this.props.peli;
-    let pelicula2 = this.props.peli2;
     if (
       this.state.moviePoster !== "N/A" &&
       this.state.moviePoster !== undefined
     ) {
       return (
         <div>
-          <img alt="" src={this.state.moviePoster}></img>
-          <h2>{this.state.movieTitle}</h2>
+          <div className="pruebaDiv">
+            <img alt="" src={this.state.moviePoster}></img>
+            <div>
+              <h1>{this.state.movieTitle}</h1>
+              <h5>Año: {this.state.movieYear}</h5>
+              <h5>Director: {this.state.movieDirector}</h5>
+              <h5>Actores: {this.state.movieActors}</h5>
+              <h5>Duración: {this.state.movieRuntime}</h5>
+            </div>
+          </div>
         </div>
       );
     } else {
       return (
-        <div>
+        <div className="pruebaDiv">
           <img alt="" src={nullImg}></img>
-          <h2>{this.state.movieTitle}</h2>
+          <div>
+            <h2>Por favor ingresa un título en el campo de texto</h2>
+          </div>
         </div>
       );
     }
   }
 }
-
+/*
 const FetchMovie = props => {
   return <FetchAlone peli={props.peli} />;
-};
+};*/
 
 export default FetchMovie;
